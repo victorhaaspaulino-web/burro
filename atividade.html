@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bet King - Cassino Online</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; color: #fff; min-height: 100vh; overflow-x: hidden; }
+
+        #home {
+            background: linear-gradient(rgba(0,0,0,0.22), rgba(0,0,0,0.32)),
+                        url('https://wallpapers.com/images/hd/casino-background-29csf9b6u7kgadd4.jpg') center/cover fixed;
+        }
+
+        .top-bar {
+            background: linear-gradient(90deg, #FFEA00, #FF8C00);
+            color: #000;
+            text-align: center;
+            padding: 11px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 200;
+        }
+
+        header {
+            background: rgba(0,0,0,0.65);
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 48px;
+            z-index: 100;
+            border-bottom: 3px solid #FFEA00;
+        }
+
+        .logo { font-size: 3rem; font-weight: 900; color: #FFEA00; letter-spacing: 5px; }
+
+        .hero { text-align: center; padding: 180px 20px 80px; }
+        h1 { font-size: 4.8rem; text-shadow: 0 0 25px #FFEA00; }
+        .subtitle { font-size: 2.1rem; color: #FFEA00; margin: 20px 0 50px; }
+
+        .btn-principal {
+            padding: 22px 75px;
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #FFEA00, #FFAA00);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .jogo-card {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid #FFEA00;
+            border-radius: 18px;
+            width: 290px;
+            cursor: pointer;
+            transition: 0.4s;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .jogo-card:hover { transform: translateY(-20px) scale(1.06); }
+
+        .jogo-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
+
+        /* ==================== COOKIE BANNERS ==================== */
+        .cookie-banner {
+            position: fixed;
+            background: linear-gradient(#1a1a1a, #111);
+            border: 4px solid #FFEA00;
+            border-radius: 15px;
+            padding: 25px 35px;
+            box-shadow: 0 0 40px rgba(255, 234, 0, 0.8);
+            z-index: 10000;
+            animation: pulse 1.8s infinite;
+            display: none;
+            text-align: center;
+        }
+
+        .cookie-banner.mega {
+            background: linear-gradient(#8B0000, #FF0000);
+            border-color: #FFFF00;
+            color: white;
+            animation: pulse 0.8s infinite;
+            font-size: 1.3rem;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 234, 0, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(255, 234, 0, 0.95); }
+            100% { box-shadow: 0 0 20px rgba(255, 234, 0, 0.5); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ====================== PÁGINA INICIAL ====================== -->
+    <div id="home">
+        <div class="top-bar">🔥 2.347 jogadores online agora • Jackpot: R$ 892.451 🔥</div>
+        <header><div class="logo">BET KING</div></header>
+
+        <div class="hero">
+            <h1>BEM-VINDO AO BET KING</h1>
+            <p class="subtitle">🎰 O Maior Cassino da Quebrada 🔥</p>
+            <button class="btn-principal" onclick="irParaJogos()">ENTRAR AGORA E GANHAR</button>
+        </div>
+
+        <div class="jogos-populares" style="padding:80px 5% 100px; background:rgba(0,0,0,0.45); text-align:center;">
+            <h2 style="font-size:2.9rem; color:#FFEA00; margin-bottom:55px;">🎮 Jogos em Destaque</h2>
+            <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:25px;">
+                <div class="jogo-card" onclick="mostrarJogo('fortune-page')">
+                    <img src="https://midia.gruposinos.com.br/_midias/jpg/2024/07/13/jogo_do_tigrinho_fortune_tiger-21766231.jpg">
+                    <div style="padding:15px;"><h3 style="color:#FFEA00;">Fortune Tiger</h3></div>
+                </div>
+                <div class="jogo-card" onclick="mostrarJogo('roleta-page')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6elED2yykrR2_W8FQ3PSCeU_T9FwZcvSdKQ&s">
+                    <div style="padding:15px;"><h3 style="color:#FFEA00;">Roleta Ao Vivo</h3></div>
+                </div>
+                <div class="jogo-card" onclick="mostrarJogo('slots-page')">
+                    <img src="https://www.cimm.com.br/portal/uploads/cimm/asset/file/14974/wide_caca-niqueis.jpg">
+                    <div style="padding:15px;"><h3 style="color:#FFEA00;">Caça-Níqueis</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cookiesFechados = 0;
+        let ultraSpamAtivado = false;
+
+        function criarCookieBanner() {
+            const banner = document.createElement('div');
+            banner.className = 'cookie-banner';
+            
+            banner.style.bottom = Math.random() * 80 + 5 + '%';
+            banner.style.left = Math.random() * 70 + 10 + '%';
+            banner.style.width = (cookiesFechados > 18) ? '400px' : '320px';
+
+            banner.innerHTML = `
+                <h3>🍪 ATENÇÃO: COOKIES</h3>
+                <p>Precisamos da sua permissão para continuar oferecendo bônus!</p>
+                <button onclick="fecharCookie(this)" style="margin-top:15px; padding:12px 35px; background:#FFEA00; color:#000; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">
+                    ACEITAR COOKIES
+                </button>
+            `;
+            document.body.appendChild(banner);
+            banner.style.display = 'block';
+        }
+
+        function fecharCookie(botao) {
+            botao.parentElement.remove();
+            cookiesFechados++;
+
+            if (cookiesFechados >= 20 && !ultraSpamAtivado) {
+                ultraSpamAtivado = true;
+                alert("Você fechou 20 cookies!\nO spam total foi ativado e não vai parar!");
+                ultraSpamMode();
+            } else if (cookiesFechados >= 20) {
+                setTimeout(criarCookieBanner, 80);   // Spam muito rápido
+            } else {
+                setTimeout(criarCookieBanner, 500);
+            }
+        }
+
+        // Modo Ultra Spam - NUNCA PARA
+        function ultraSpamMode() {
+            setInterval(() => {
+                criarCookieBanner();
+            }, 90); // Continua spammando para sempre
+        }
+
+        // Início dos cookies
+        window.onload = function() {
+            setTimeout(() => criarCookieBanner(), 600);
+            setTimeout(() => criarCookieBanner(), 1500);
+            setTimeout(() => criarCookieBanner(), 2500);
+        };
+
+        function mostrarJogo(id) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function voltarHome() {
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('fortune-page').style.display = 'none';
+            document.getElementById('roleta-page').style.display = 'none';
+            document.getElementById('slots-page').style.display = 'none';
+        }
+
+        function irParaJogos() {
+            alert("Bem-vindo! Clique nos jogos abaixo.");
+        }
+    </script>
+</body>
+</html>
